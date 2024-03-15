@@ -27,3 +27,6 @@ nb-configuration.xml
 
 # Maven lock file
 maven.lock
+
+# VS Code files
+.vscode
