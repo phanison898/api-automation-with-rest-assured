@@ -1,0 +1,29 @@
+# Maven specific
+target/
+*.iml
+.idea/
+*.log
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+
+# NetBeans specific
+nb-configuration.xml
+
+# macOS specific
+.DS_Store
+
+# Compiled Java class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Maven lock file
+maven.lock
