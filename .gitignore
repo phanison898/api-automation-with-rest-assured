@@ -30,3 +30,6 @@ maven.lock
 
 # VS Code files
 .vscode
+
+# TestNG
+test-output/

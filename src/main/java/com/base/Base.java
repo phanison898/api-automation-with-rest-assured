@@ -11,11 +11,11 @@ public class Base {
 
 	private JsonObject jsonObject = null;
 
-	Base() {
+	public Base() {
 
 		String jsonFilePath = System.getProperty("user.dir") + "/config.json";
 
-		if (jsonObject != null) {
+		if (jsonObject == null) {
 			FileReader reader = null;
 			Gson gson = new Gson();
 
@@ -37,9 +37,8 @@ public class Base {
 		}
 
 	}
-
+	
 	public String getApiUrl() {
 		return jsonObject.get("api_url").getAsString();
 	}
-
 }
