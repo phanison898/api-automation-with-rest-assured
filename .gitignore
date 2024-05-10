@@ -32,4 +32,7 @@ maven.lock
 .vscode
 
 # TestNG
-test-output/
+/test-output/
+
+# Extent Reports
+/x-output/
