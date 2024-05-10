@@ -39,4 +39,4 @@ maven.lock
 
 
 # exclude db.json file
-/src/main/resources/json/db.json
+#/src/main/resources/json/db.json
