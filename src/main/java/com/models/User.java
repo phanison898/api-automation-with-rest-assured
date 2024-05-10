@@ -36,7 +36,7 @@ public class User {
 		String id = UUID.randomUUID().toString();
 		String username = faker.name().username();
 		String email = username + "@gmail.com";
-		int age = rand.nextInt(20, 30);
+		int age = rand.nextInt(30);
 		String gender = rand.nextBoolean() ? "male" : "female";
 
 		return new User(id, username, email, age, gender);
@@ -48,7 +48,7 @@ public class User {
 
 		String username = faker.name().username();
 		String email = username + "@gmail.com";
-		int age = rand.nextInt(20, 30);
+		int age = rand.nextInt(30);
 		String gender = rand.nextBoolean() ? "male" : "female";
 
 		return new User(id, username, email, age, gender);

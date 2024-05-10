@@ -8,7 +8,7 @@ import java.util.Random;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.config.APIConfig;
+import com.config.Constants;
 import com.google.gson.Gson;
 import com.models.User;
 
@@ -25,7 +25,7 @@ public class TestCrud extends BaseTest {
 		Response rs=given()
 			.param("id", validUser.id)
 		.when()
-			.get(APIConfig.USERS_ENDPOINT);
+			.get(Constants.USERS_ENDPOINT);
 		rs.then()
 			.statusCode(200)
 			.body("[0].id", equalTo(validUser.id))
@@ -38,78 +38,73 @@ public class TestCrud extends BaseTest {
 
 	@Test(priority = 2)
 	public void postRequest() {
-		
+
 		Gson gson = new Gson();
 
 		User newUser = User.create();
-		
+
 		String jsonBody = gson.toJson(newUser);
-		
-		Response res = given()
-			.contentType("application/json")
-			.body(jsonBody)
-		.when()
-			.post(APIConfig.USERS_ENDPOINT);
-	
+
+		Response res = given().contentType("application/json").body(jsonBody).when().post(Constants.USERS_ENDPOINT);
+
 		User createdUser = gson.fromJson(res.body().asString(), User.class);
-		
+
 		res.then().statusCode(201);
-		
+
 		Assert.assertEquals(createdUser.id, newUser.id);
 		Assert.assertEquals(createdUser.username, newUser.username);
 		Assert.assertEquals(createdUser.email, newUser.email);
 		Assert.assertEquals(createdUser.age, newUser.age);
 		Assert.assertEquals(createdUser.gender, newUser.gender);
-		
+
 	}
-	
+
 	@Test(priority = 3)
 	public void putRequest() {
-		
+
 		Gson gson = new Gson();
-		
+
 		User user = User.create("a3fea2c6-b0e4-4c35-b9e7-b9de451e9b0b");
-		
-		Response res = given().body(gson.toJson(user)).put(APIConfig.USERS_ENDPOINT+"/{id}",user.id);
-		
+
+		Response res = given().body(gson.toJson(user)).put(Constants.USERS_ENDPOINT + "/{id}", user.id);
+
 		res.then().statusCode(200);
-		
+
 		User updatedUser = gson.fromJson(res.body().asString(), User.class);
-		
+
 		Assert.assertEquals(updatedUser.id, user.id);
 		Assert.assertEquals(updatedUser.username, user.username);
 		Assert.assertEquals(updatedUser.email, user.email);
 		Assert.assertEquals(updatedUser.age, user.age);
 		Assert.assertEquals(updatedUser.gender, user.gender);
-		
+
 	}
-	
+
 	@Test(priority = 4)
 	public void deleteRequest() {
-		
+
 		Random random = new Random();
-		
+
 		Gson gson = new Gson();
-		
+
 		// Get all available users
 		Response res = given().get("/users");
-		
-		User[] users=gson.fromJson(res.body().asString(), User[].class);
-		
-		User userGoingToBeDeleted = users[random.nextInt(2,users.length)];
-		
-		
+
+		User[] users = gson.fromJson(res.body().asString(), User[].class);
+
+		User userGoingToBeDeleted = users[random.nextInt(users.length)];
+
 		// Delete
-		res = given().delete(APIConfig.USERS_ENDPOINT+"/{id}",userGoingToBeDeleted.id);
-		
+		res = given().delete(Constants.USERS_ENDPOINT + "/{id}", userGoingToBeDeleted.id);
+
 		User deletedUser = gson.fromJson(res.body().asString(), User.class);
-		
+
 		Assert.assertEquals(deletedUser.id, userGoingToBeDeleted.id);
 		Assert.assertEquals(deletedUser.username, userGoingToBeDeleted.username);
 		Assert.assertEquals(deletedUser.email, userGoingToBeDeleted.email);
 		Assert.assertEquals(deletedUser.age, userGoingToBeDeleted.age);
 		Assert.assertEquals(deletedUser.gender, userGoingToBeDeleted.gender);
-		
+
 	}
-	
+
 }

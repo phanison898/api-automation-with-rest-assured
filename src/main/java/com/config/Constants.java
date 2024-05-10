@@ -1,6 +1,8 @@
 package com.config;
 
 public class Constants {
+	
+	public static final String USERS_ENDPOINT = "/users";
 
 	private static final String JSON_SERVER_FILE_NAME = "db.json";
 
