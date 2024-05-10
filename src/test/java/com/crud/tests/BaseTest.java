@@ -20,7 +20,7 @@ public class BaseTest extends Base {
 
 	@AfterSuite()
 	public void afterSuite() {
-
+		
 	}
 
 }
