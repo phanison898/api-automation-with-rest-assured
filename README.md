@@ -1,4 +1,4 @@
-### Appium Automation Framework
+### API Automation Framework
 
 ![](https://img.shields.io/github/languages/code-size/phanison898/api-automation-with-rest-assured?style=flat-square)
 ![](https://img.shields.io/github/last-commit/phanison898/api-automation-with-rest-assured?style=flat-square)
