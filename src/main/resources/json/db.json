@@ -1,24 +1,10 @@
 {
   "users": [
     {
-      "id": "ecb83418-e830-4448-8d8b-8caa7d05efa1",
-      "username": "phanison",
-      "email": "phani@gmail.com",
-      "age": 26,
-      "gender": "male"
-    },
-    {
       "id": "a3fea2c6-b0e4-4c35-b9e7-b9de451e9b0b",
-      "username": "zolani.domingo",
-      "email": "zolani.domingo@gmail.com",
-      "age": 21,
-      "gender": "male"
-    },
-    {
-      "id": "c4f2a9dd-6659-43fa-b153-6e2d5fe6b975",
-      "username": "joshua.radebe",
-      "email": "joshua.radebe@gmail.com",
-      "age": 27,
+      "username": "matthew.ehlers",
+      "email": "matthew.ehlers@gmail.com",
+      "age": 9,
       "gender": "male"
     },
     {
@@ -43,18 +29,32 @@
       "gender": "male"
     },
     {
-      "id": "30d9ab50-c0c5-434d-9243-9a0ccdce3388",
-      "username": "khayone.havenga",
-      "email": "khayone.havenga@gmail.com",
-      "age": 22,
-      "gender": "male"
-    },
-    {
       "id": "96cd5066-d997-4d9c-95a4-72ba7c361a8b",
       "username": "reiner.jonathan",
       "email": "reiner.jonathan@gmail.com",
       "age": 21,
       "gender": "male"
+    },
+    {
+      "id": "f89c29b7-63d2-4249-8f2b-329cc7af4908",
+      "username": "armand.grobler",
+      "email": "armand.grobler@gmail.com",
+      "age": 23,
+      "gender": "female"
+    },
+    {
+      "id": "b58167c8-f361-44ea-90ff-3271a1f9e417",
+      "username": "raven.hamman",
+      "email": "raven.hamman@gmail.com",
+      "age": 2,
+      "gender": "female"
+    },
+    {
+      "id": "8b1aa5f5-49a2-4166-ab67-968407db6a5d",
+      "username": "sarah.sayed",
+      "email": "sarah.sayed@gmail.com",
+      "age": 19,
+      "gender": "female"
     }
   ]
 }
