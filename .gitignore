@@ -36,3 +36,7 @@ maven.lock
 
 # Extent Reports
 /x-output/
+
+
+# exclude db.json file
+/src/main/resources/json/db.json
