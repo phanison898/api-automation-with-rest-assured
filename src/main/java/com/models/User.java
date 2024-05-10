@@ -1,57 +1,55 @@
 package com.models;
 
-import java.util.Locale;
-import java.util.Random;
-import java.util.UUID;
-
-import com.github.javafaker.Faker;
-
 public class User {
 
-	public String id;
-	public String username;
-	public String email;
-	public int age;
-	public String gender;
+	private String id;
 
-	public User(String username, String email, int age, String gender) {
-		this.username = username;
-		this.email = email;
-		this.age = age;
-		this.gender = gender;
+	private String username;
+
+	private String email;
+
+	private int age;
+
+	private String gender;
+
+	public String getId() {
+		return id;
 	}
 
-	public User(String id, String username, String email, int age, String gender) {
+	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public static User create() {
-		Faker faker = new Faker(new Locale("en-ZA"));
-		Random rand = new Random();
-
-		String id = UUID.randomUUID().toString();
-		String username = faker.name().username();
-		String email = username + "@gmail.com";
-		int age = rand.nextInt(30);
-		String gender = rand.nextBoolean() ? "male" : "female";
-
-		return new User(id, username, email, age, gender);
-	}
-	
-	public static User create(String id) {
-		Faker faker = new Faker(new Locale("en-ZA"));
-		Random rand = new Random();
-
-		String username = faker.name().username();
-		String email = username + "@gmail.com";
-		int age = rand.nextInt(30);
-		String gender = rand.nextBoolean() ? "male" : "female";
-
-		return new User(id, username, email, age, gender);
 	}
 
 }

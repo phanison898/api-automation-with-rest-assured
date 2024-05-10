@@ -3,107 +3,208 @@ package com.crud.tests;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-import java.util.Random;
-
-import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.config.Constants;
-import com.google.gson.Gson;
+import com.models.Model;
 import com.models.User;
-
-import io.restassured.response.Response;
+import com.utils.JsonUtil;
 
 public class TestCrud extends BaseTest {
 
-	@Test(priority = 1)
-	public void getRequest() {
+	private User user = null;
 
-		// Valid user details already available in db
-		User validUser = new User("ecb83418-e830-4448-8d8b-8caa7d05efa1", "phanison", "phani@gmail.com", 26, "male");
+	@BeforeClass
+	public void createUser() {
 
-		Response rs=given()
-			.param("id", validUser.id)
-		.when()
-			.get(Constants.USERS_ENDPOINT);
-		rs.then()
-			.statusCode(200)
-			.body("[0].id", equalTo(validUser.id))
-			.body("[0].username", equalTo(validUser.username))
-			.body("[0].email", equalTo(validUser.email))
-			.body("[0].age", equalTo(validUser.age))
-			.body("[0].gender", equalTo(validUser.gender));
+		user = Model.createUser();
+	}
+
+	@Test(priority = 1, enabled = true)
+	public void createUserUsingPostRequest() {
+
+		String jsonReq = JsonUtil.convertToJson(user);
+		logger.createJsonCodeBlock("Request body which user sent", jsonReq);
+
+		logger.info("Sending POST request ...");
+		
+		String jsonRes = 
+			given()
+				.contentType("application/json")
+				.body(user)
+			.when()
+				.post(Constants.USERS_ENDPOINT)
+			.then()
+				.statusCode(201)
+				.body("id", equalTo(user.getId()))
+				.body("username", equalTo(user.getUsername()))
+				.body("email", equalTo(user.getEmail()))
+				.body("age", equalTo(user.getAge()))
+				.body("gender", equalTo(user.getGender()))
+			.extract()
+				.body()
+				.asPrettyString();
+		
+		
+		logger.pass("Successfully sent POST request");
+		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
 
 	}
 
-	@Test(priority = 2)
-	public void postRequest() {
+	@Test(priority = 2, enabled = true)
+	public void readUserUsingGetRequest() {
 
-		Gson gson = new Gson();
+		String jsonReq = JsonUtil.convertToJson(user);
+		logger.createJsonCodeBlock("Known user details (this user is created in earlier POST request)", jsonReq);
 
-		User newUser = User.create();
-
-		String jsonBody = gson.toJson(newUser);
-
-		Response res = given().contentType("application/json").body(jsonBody).when().post(Constants.USERS_ENDPOINT);
-
-		User createdUser = gson.fromJson(res.body().asString(), User.class);
-
-		res.then().statusCode(201);
-
-		Assert.assertEquals(createdUser.id, newUser.id);
-		Assert.assertEquals(createdUser.username, newUser.username);
-		Assert.assertEquals(createdUser.email, newUser.email);
-		Assert.assertEquals(createdUser.age, newUser.age);
-		Assert.assertEquals(createdUser.gender, newUser.gender);
-
-	}
-
-	@Test(priority = 3)
-	public void putRequest() {
-
-		Gson gson = new Gson();
-
-		User user = User.create("a3fea2c6-b0e4-4c35-b9e7-b9de451e9b0b");
-
-		Response res = given().body(gson.toJson(user)).put(Constants.USERS_ENDPOINT + "/{id}", user.id);
-
-		res.then().statusCode(200);
-
-		User updatedUser = gson.fromJson(res.body().asString(), User.class);
-
-		Assert.assertEquals(updatedUser.id, user.id);
-		Assert.assertEquals(updatedUser.username, user.username);
-		Assert.assertEquals(updatedUser.email, user.email);
-		Assert.assertEquals(updatedUser.age, user.age);
-		Assert.assertEquals(updatedUser.gender, user.gender);
+		logger.info("Sending GET request where ID = [ " + user.getId() +" ] ...");
+		
+		String jsonRes = 
+				given()
+					.contentType("application/json")
+					.param("id", user.getId())
+				.when()
+					.get(Constants.USERS_ENDPOINT)
+				.then()
+					.statusCode(200)
+					.body("[0].id", equalTo(user.getId()))
+					.body("[0].username", equalTo(user.getUsername()))
+					.body("[0].email", equalTo(user.getEmail()))
+					.body("[0].age", equalTo(user.getAge()))
+					.body("[0].gender", equalTo(user.getGender()))
+				.extract()
+					.body()
+					.asPrettyString();
+			
+		
+		logger.pass("Successfully sent GET request");
+		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
 
 	}
 
-	@Test(priority = 4)
-	public void deleteRequest() {
+	@Test(priority = 3, enabled = true)
+	public void updateUserUsingPutRequest() {
 
-		Random random = new Random();
+		// Create a new user with different details but with same id
+		User updatedUser = Model.updateUser(user);
+		
+		String userJson = JsonUtil.convertToJson(user);
+		String updatedUserJson = JsonUtil.convertToJson(updatedUser);
+		
+		logger.createJsonCodeBlock("User details before sending PUT request : ", userJson);
+		logger.createJsonCodeBlock("Modified User details as below for sending PUT request: ", updatedUserJson);
+		
+		logger.info("Sending PUT request where ID = [ " + user.getId() +" ] ...");
 
-		Gson gson = new Gson();
+		// reseting user details to modified details
+		user = updatedUser;
+		
+		String jsonRes = 
+				given()
+					.contentType("application/json")
+					.body(updatedUser)
+				.when()
+					.put(Constants.USERS_ENDPOINT + "/{id}", user.getId())
+				.then()
+					.statusCode(200)
+					.body("id", equalTo(user.getId()))
+					.body("username", equalTo(user.getUsername()))
+					.body("email", equalTo(user.getEmail()))
+					.body("age", equalTo(user.getAge()))
+					.body("gender", equalTo(user.getGender()))
+				.extract()
+					.body()
+					.asPrettyString();
+			
+		logger.pass("Successfully sent PUT request");
+		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
+	}
+	
+	@Test(priority = 4, enabled = true)
+	public void updateUserUsingPatchRequest() {
+		
 
-		// Get all available users
-		Response res = given().get("/users");
+		String userJson = JsonUtil.convertToJson(user);
+		logger.createJsonCodeBlock("User details before sending PATCH request : ", userJson);
 
-		User[] users = gson.fromJson(res.body().asString(), User[].class);
+		// Create a new user with different details but with same id
+		Object[] object = Model.updateUsersRandomField(user);
+		
+		String fieldName = object[0].toString();
+		Object filedValue = object[1];
+		String jsonString = object[2].toString();
+		
+		logger.createJsonCodeBlock(String.format("Modified %s property as below", fieldName), jsonString);
+		
+		logger.info("Sending PATCH request where ID = [ " + user.getId() +" ] ...");
+		
+		switch (fieldName.toLowerCase()) {
+		
+			case "username":
+				user.setUsername(filedValue.toString());
+				break;
+			case "email":
+				user.setEmail(filedValue.toString());
+				break;
+			case "age":
+				user.setAge((int)filedValue);
+				break;
+			case "gender":
+				user.setGender(filedValue.toString());
+				break;
+				
+		}
+		
+		String jsonRes = 
+				given()
+					.contentType("application/json")
+					.body(jsonString)
+				.when()
+					.patch(Constants.USERS_ENDPOINT + "/{id}", user.getId())
+				.then()
+					.statusCode(200)
+					.body("id", equalTo(user.getId()))
+					.body("username", equalTo(user.getUsername()))
+					.body("email", equalTo(user.getEmail()))
+					.body("age", equalTo(user.getAge()))
+					.body("gender", equalTo(user.getGender()))
+				.extract()
+					.body()
+					.asPrettyString();
+			
+		logger.pass("Successfully sent PATCH request");
+		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
+	}
 
-		User userGoingToBeDeleted = users[random.nextInt(users.length)];
+	@Test(priority = 5, enabled = true)
+	public void deleteUserUsingDeleteRequest() {
 
-		// Delete
-		res = given().delete(Constants.USERS_ENDPOINT + "/{id}", userGoingToBeDeleted.id);
+		String jsonReq = JsonUtil.convertToJson(user);
+		logger.createJsonCodeBlock("Request body which user sent", jsonReq);
 
-		User deletedUser = gson.fromJson(res.body().asString(), User.class);
-
-		Assert.assertEquals(deletedUser.id, userGoingToBeDeleted.id);
-		Assert.assertEquals(deletedUser.username, userGoingToBeDeleted.username);
-		Assert.assertEquals(deletedUser.email, userGoingToBeDeleted.email);
-		Assert.assertEquals(deletedUser.age, userGoingToBeDeleted.age);
-		Assert.assertEquals(deletedUser.gender, userGoingToBeDeleted.gender);
+		logger.info("Sending DELETE request where ID = [ " + user.getId() +" ] ...");
+		
+		String jsonRes = 
+				given()
+					.contentType("application/json")
+					.param("id", user.getId())
+				.when()
+					.delete(Constants.USERS_ENDPOINT + "/{id}", user.getId())
+				.then()
+					.statusCode(200)
+					.body("id", equalTo(user.getId()))
+					.body("username", equalTo(user.getUsername()))
+					.body("email", equalTo(user.getEmail()))
+					.body("age", equalTo(user.getAge()))
+					.body("gender", equalTo(user.getGender()))
+				.extract()
+					.body()
+					.asPrettyString();
+			
+		
+		logger.pass("Successfully sent DELETE request");
+		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
 
 	}
 
