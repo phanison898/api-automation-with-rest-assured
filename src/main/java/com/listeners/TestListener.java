@@ -79,7 +79,14 @@ public class TestListener implements ITestListener {
 			output.append(c);
 		}
 
-		return output.toString().replace("post", "POST").replace("get", "GET").replace("put", "PUT")
-				.replace("patch", "PATCH").replace("delete", "DELETE");
+		return output.toString()
+				.replace("post", "POST")
+				.replace("create", "CREATE")
+				.replace("get", "GET")
+				.replace("read", "READ")
+				.replace("put", "PUT")
+				.replace("update", "UPDATE")
+				.replace("patch", "PATCH")
+				.replace("delete", "DELETE");
 	}
 }

@@ -6,10 +6,18 @@
 		<listener class-name="com.listeners.TestListener" />
 	</listeners>
 
-  <test thread-count="5" name="Test">
+  <test name="BDD type of testing">
   
     <classes>
-      <class name="com.crud.tests.TestCrud"/>
+      <class name="com.crud.tests.CRUDTestBDD"/>
+    </classes>
+    
+  </test>
+  
+   <test name="Req/Res spec type of testing">
+  
+    <classes>
+      <class name="com.crud.tests.CRUDTestNormal"/>
     </classes>
     
   </test>

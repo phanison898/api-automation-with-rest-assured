@@ -11,7 +11,7 @@ import com.models.Model;
 import com.models.User;
 import com.utils.JsonUtil;
 
-public class TestCrud extends BaseTest {
+public class CRUDTestBDD extends BaseTest {
 
 	private User user = null;
 

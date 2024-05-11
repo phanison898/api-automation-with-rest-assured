@@ -7,6 +7,10 @@ public class Config {
 
 	private static JsonObject jo = null;
 
+	public static String getApiUrl() {
+		return getJsonObject().get("api_url").getAsString();
+	}
+	
 	public static String getReportName() {
 		return getJsonObject().get("report").getAsJsonObject().get("name").getAsString();
 	}
