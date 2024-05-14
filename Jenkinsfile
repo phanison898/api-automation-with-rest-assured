@@ -14,10 +14,13 @@ pipeline {
             steps {
                 publishHTML(target: [
                     allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: false,
                     reportDir: 'x-output/reports',
-                    reportFiles: 'index.html'
+                    reportFiles: 'index.html', 
+    				reportName: 'Extent Report',
+    				reportTitles: 'API Automation Report',
+    				wrapperName: 'HTML Report'
                 ])
             }
         }
