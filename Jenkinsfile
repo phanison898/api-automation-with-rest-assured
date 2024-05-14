@@ -7,7 +7,7 @@ pipeline {
         stage('Start REST Server') {
             steps {
                 dir('src/main/resources/json') {
-                    bat 'node --version'
+                    bat 'json-server --watch db.json'
                 }
             }
         }
