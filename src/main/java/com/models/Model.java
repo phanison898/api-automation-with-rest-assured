@@ -9,105 +9,105 @@ import com.utils.JsonUtil;
 
 public class Model {
 
-	private static final int MIN_AGE = 18;
+    private static final int MIN_AGE = 18;
 
-	private static final int MAX_AGE = 60;
+    private static final int MAX_AGE = 60;
 
-	public static User createUser() {
+    public static User createUser() {
 
-		User user = new User();
+        User user = new User();
 
-		Faker faker = new Faker(new Locale("en_IN"));
-		Random rand = new Random();
+        Faker faker = new Faker(new Locale("en_IN"));
+        Random rand = new Random();
 
-		String id = UUID.randomUUID().toString();
-		String username = faker.name().username();
-		String email = username + "@gmail.com";
-		int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
-		String gender = rand.nextBoolean() ? "male" : "female";
+        String id = UUID.randomUUID().toString();
+        String username = faker.name().username();
+        String email = username + "@gmail.com";
+        int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
+        String gender = rand.nextBoolean() ? "male" : "female";
 
-		user.setId(id);
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setAge(age);
-		user.setGender(gender);
+        user.setId(id);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setAge(age);
+        user.setGender(gender);
 
-		return user;
-	}
-	
-	public static User createInvalidUser() {
+        return user;
+    }
 
-		User user = new User();
+    public static User createInvalidUser() {
 
-		Faker faker = new Faker(new Locale("en_IN"));
-		Random rand = new Random();
+        User user = new User();
 
-		String id = UUID.randomUUID().toString();
-		String username = faker.name().username();
-		String email = username + "@gmail.com";
-		int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
-		String gender = rand.nextBoolean() ? "male" : "female";
+        Faker faker = new Faker(new Locale("en_IN"));
+        Random rand = new Random();
 
-		user.setId(id);
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setAge(age);
-		user.setGender(gender);
+        String id = UUID.randomUUID().toString();
+        String username = faker.name().username();
+        String email = username + "@gmail.com";
+        int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
+        String gender = rand.nextBoolean() ? "male" : "female";
 
-		return user;
-	}
+        user.setId(id);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setAge(age);
+        user.setGender(gender);
 
-	public static User updateUser(User user) {
+        return user;
+    }
 
-		Faker faker = new Faker(new Locale("en_IN"));
-		Random rand = new Random();
+    public static User updateUser(User user) {
 
-		String username = faker.name().username();
-		String email = username + "@gmail.com";
-		int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
-		String gender = rand.nextBoolean() ? "male" : "female";
+        Faker faker = new Faker(new Locale("en_IN"));
+        Random rand = new Random();
 
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setAge(age);
-		user.setGender(gender);
+        String username = faker.name().username();
+        String email = username + "@gmail.com";
+        int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
+        String gender = rand.nextBoolean() ? "male" : "female";
 
-		return user;
-	}
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setAge(age);
+        user.setGender(gender);
 
-	public static Object[] updateUsersRandomField(User user) {
+        return user;
+    }
 
-		Faker faker = new Faker(new Locale("en_IN"));
-		Random rand = new Random();
+    public static Object[] updateUsersRandomField(User user) {
 
-		String username = faker.name().username();
+        Faker faker = new Faker(new Locale("en_IN"));
+        Random rand = new Random();
 
-		int randomUserFieldIndex = rand.nextInt(UserFieldType.LIST.length - 1) + 1; // it won't pick ID because ID is at
+        String username = faker.name().username();
 
-		String fieldName = UserFieldType.LIST[randomUserFieldIndex];
-		String jsonString = "";
-		Object fieldValue = null;
+        int randomUserFieldIndex = rand.nextInt(UserFieldType.LIST.length - 1) + 1; // it won't pick ID because ID is at
 
-		switch (fieldName.toLowerCase()) {
-		case "username":
-			fieldValue = username;
-			jsonString = JsonUtil.convertToJson(UserFieldType.USERNAME, fieldValue.toString());
-			break;
-		case "email":
-			fieldValue = username + "@gmail.com";
-			jsonString = JsonUtil.convertToJson(UserFieldType.EMAIL, fieldValue.toString());
-			break;
-		case "age":
-			fieldValue = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
-			jsonString = JsonUtil.convertToJson(UserFieldType.AGE, (int) fieldValue);
-			break;
-		case "gender":
-			fieldValue = rand.nextBoolean() ? "male" : "female";
-			jsonString = JsonUtil.convertToJson(UserFieldType.GENDER, fieldValue.toString());
-			break;
-		}
+        String fieldName = UserFieldType.LIST[randomUserFieldIndex];
+        String jsonString = "";
+        Object fieldValue = null;
 
-		return new Object[] { fieldName, fieldValue, jsonString };
-	}
+        switch (fieldName.toLowerCase()) {
+            case "username":
+                fieldValue = username;
+                jsonString = JsonUtil.convertToJson(UserFieldType.USERNAME, fieldValue.toString());
+                break;
+            case "email":
+                fieldValue = username + "@gmail.com";
+                jsonString = JsonUtil.convertToJson(UserFieldType.EMAIL, fieldValue.toString());
+                break;
+            case "age":
+                fieldValue = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
+                jsonString = JsonUtil.convertToJson(UserFieldType.AGE, (int) fieldValue);
+                break;
+            case "gender":
+                fieldValue = rand.nextBoolean() ? "male" : "female";
+                jsonString = JsonUtil.convertToJson(UserFieldType.GENDER, fieldValue.toString());
+                break;
+        }
+
+        return new Object[]{fieldName, fieldValue, jsonString};
+    }
 
 }

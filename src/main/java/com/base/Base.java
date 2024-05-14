@@ -9,36 +9,36 @@ import com.google.gson.JsonObject;
 
 public class Base {
 
-	private JsonObject jsonObject = null;
+    private JsonObject jsonObject = null;
 
-	public Base() {
+    public Base() {
 
-		String jsonFilePath = System.getProperty("user.dir") + "/config.json";
+        String jsonFilePath = System.getProperty("user.dir") + "/config.json";
 
-		if (jsonObject == null) {
-			FileReader reader = null;
-			Gson gson = new Gson();
+        if (jsonObject == null) {
+            FileReader reader = null;
+            Gson gson = new Gson();
 
-			try {
-				reader = new FileReader(jsonFilePath);
-				jsonObject = gson.fromJson(reader, JsonObject.class);
+            try {
+                reader = new FileReader(jsonFilePath);
+                jsonObject = gson.fromJson(reader, JsonObject.class);
 
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
-	}
-	
-	public String getApiUrl() {
-		return jsonObject.get("api_url").getAsString();
-	}
+    }
+
+    public String getApiUrl() {
+        return jsonObject.get("api_url").getAsString();
+    }
 }

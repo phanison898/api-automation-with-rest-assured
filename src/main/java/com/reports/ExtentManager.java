@@ -8,38 +8,38 @@ import com.config.Paths;
 
 public class ExtentManager {
 
-	private static ExtentReports extent = null;
-	private static ExtentSparkReporter spark = null;
+    private static ExtentReports extent = null;
+    private static ExtentSparkReporter spark = null;
 
-	public static ExtentReports getExtentReport() {
+    public static ExtentReports getExtentReport() {
 
-		if (extent == null) {
+        if (extent == null) {
 
-			extent = new ExtentReports();
+            extent = new ExtentReports();
 
-			spark = new ExtentSparkReporter(Paths.EXTENT_REPORT_FILE);
+            spark = new ExtentSparkReporter(Paths.EXTENT_REPORT_FILE);
 
-			setSystemInfo();
-			configureSparkReporter();
+            setSystemInfo();
+            configureSparkReporter();
 
-			extent.attachReporter(spark);
+            extent.attachReporter(spark);
 
-		}
-		return extent;
-	}
+        }
+        return extent;
+    }
 
-	public static void flushExtentReport() {
-		extent.flush();
-	}
+    public static void flushExtentReport() {
+        extent.flush();
+    }
 
-	private static void setSystemInfo() {
-		// To-Do
-	}
+    private static void setSystemInfo() {
+        // To-Do
+    }
 
-	private static void configureSparkReporter() {
-		spark.config().setDocumentTitle(Config.getReportTitle());
-		spark.config().setReportName(Config.getReportName());
-		spark.config().setTheme(Config.getReportTheme().equals("dark") ? Theme.DARK : Theme.STANDARD);
-	}
+    private static void configureSparkReporter() {
+        spark.config().setDocumentTitle(Config.getReportTitle());
+        spark.config().setReportName(Config.getReportName());
+        spark.config().setTheme(Config.getReportTheme().equals("dark") ? Theme.DARK : Theme.STANDARD);
+    }
 
 }

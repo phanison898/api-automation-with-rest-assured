@@ -5,43 +5,43 @@ import com.google.gson.JsonObject;
 
 public class Config {
 
-	private static JsonObject jo = null;
+    private static JsonObject jo = null;
 
-	public static String getApiUrl() {
-		return getJsonObject().get("api_url").getAsString();
-	}
-	
-	public static String getReportName() {
-		return getJsonObject().get("report").getAsJsonObject().get("name").getAsString();
-	}
+    public static String getApiUrl() {
+        return getJsonObject().get("api_url").getAsString();
+    }
 
-	public static String getReportTitle() {
-		return getJsonObject().get("report").getAsJsonObject().get("title").getAsString();
-	}
+    public static String getReportName() {
+        return getJsonObject().get("report").getAsJsonObject().get("name").getAsString();
+    }
 
-	public static String getReportTheme() {
-		return getJsonObject().get("report").getAsJsonObject().get("theme").getAsString();
-	}
+    public static String getReportTitle() {
+        return getJsonObject().get("report").getAsJsonObject().get("title").getAsString();
+    }
 
-	public static String getAuthorName() {
-		return getJsonObject().get("author").getAsJsonObject().get("name").getAsString();
-	}
+    public static String getReportTheme() {
+        return getJsonObject().get("report").getAsJsonObject().get("theme").getAsString();
+    }
 
-	public static String getAutherGithubUsername() {
-		return getJsonObject().get("author").getAsJsonObject().get("github-username").getAsString();
-	}
+    public static String getAuthorName() {
+        return getJsonObject().get("author").getAsJsonObject().get("name").getAsString();
+    }
 
-	public static String getAuthorEmail() {
-		return getJsonObject().get("author").getAsJsonObject().get("email").getAsString();
-	}
+    public static String getAutherGithubUsername() {
+        return getJsonObject().get("author").getAsJsonObject().get("github-username").getAsString();
+    }
 
-	private static JsonObject getJsonObject() {
+    public static String getAuthorEmail() {
+        return getJsonObject().get("author").getAsJsonObject().get("email").getAsString();
+    }
 
-		if (jo == null) {
-			JsonReader jsonReader = new JsonReader(Paths.JSON_CONFIG_FILE);
-			jo = jsonReader.read();
-		}
+    private static JsonObject getJsonObject() {
 
-		return jo;
-	}
+        if (jo == null) {
+            JsonReader jsonReader = new JsonReader(Paths.JSON_CONFIG_FILE);
+            jo = jsonReader.read();
+        }
+
+        return jo;
+    }
 }

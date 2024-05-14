@@ -12,4 +12,5 @@ public class Paths {
 
 	public static final String SCREENSHOTS_REL_DIR = "screenshots";
 
+	public static final String DB_JSON_DIR = HOME + "/src/main/resources/json";
 }

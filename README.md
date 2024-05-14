@@ -25,9 +25,10 @@ API automation framework developped using Rest-Assured, Java, TestNG and Maven
 #### ⛔ Pre-requisites
 
 1. **Appium** installation
-   - Install Java JDK
-   - Install Maven
-   - Install json-server using Node.js
+    - Install Java JDK
+    - Install Maven
+    - Install json-server using Node.js
+
 ---
 
 #### ✅ How to make use of this repo?
@@ -49,4 +50,5 @@ API automation framework developped using Rest-Assured, Java, TestNG and Maven
    ```bash
        mvn clean test
    ```
+
 ---

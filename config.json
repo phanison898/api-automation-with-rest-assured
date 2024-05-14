@@ -1,13 +1,13 @@
 {
-	"api_url": "http://localhost:3000",
-	"report": {
-		"name": "Automation test report",
-		"title": "Extent report",
-		"theme": "dark"
-	},
-	"author": {
-		"name": "Phani Kumar",
-		"github-username": "Phanison898",
-		"email": "phanison898@gmail.com"
-	}
+  "api_url": "http://localhost:3000",
+  "report": {
+    "name": "Automation test report",
+    "title": "Extent report",
+    "theme": "dark"
+  },
+  "author": {
+    "name": "Phani Kumar",
+    "github-username": "Phanison898",
+    "email": "phanison898@gmail.com"
+  }
 }
