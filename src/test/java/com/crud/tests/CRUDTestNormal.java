@@ -1,32 +1,13 @@
 package com.crud.tests;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.config.Config;
 import com.models.Model;
-import com.models.User;
 import com.utils.JsonUtil;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-
 public class CRUDTestNormal extends BaseTest {
-	
-	private User user;
-	
-	@BeforeClass
-	public void beforeClass() {
-		
-		user = Model.createUser();
-			 
-	}
 	
 	@Test(priority=1, description = "Verify create user functionality using POST request", enabled = true)
 	public void verifyCreateUserFunctionalityUsingPostRequest() {
@@ -124,34 +105,5 @@ public class CRUDTestNormal extends BaseTest {
 		logger.pass("Successfully sent DELETE request");
 		logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
 		
-	}
-	
-
-	private RequestSpecification getReqSpec() {
-		
-		RequestSpecification reqSpec = 
-			new RequestSpecBuilder()
-				.setBaseUri(Config.getApiUrl())
-				.setBasePath("/users")
-				.addHeader("Content-Type", "application/json")
-				.build();
-		
-		return reqSpec;
-	}
-	
-	private ResponseSpecification getResSpec(int statusCode) {
-		
-		ResponseSpecification resSpec = 
-			new ResponseSpecBuilder()
-				.expectStatusCode(statusCode)
-				.expectContentType(ContentType.JSON)
-				.expectBody("id",equalTo(user.getId()))
-				.expectBody("username",equalTo(user.getUsername()))
-				.expectBody("email",equalTo(user.getEmail()))
-				.expectBody("age",equalTo(user.getAge()))
-				.expectBody("gender",equalTo(user.getGender()))
-				.build();	
-		
-		return resSpec;
 	}
 }

@@ -34,6 +34,28 @@ public class Model {
 
 		return user;
 	}
+	
+	public static User createInvalidUser() {
+
+		User user = new User();
+
+		Faker faker = new Faker(new Locale("en_IN"));
+		Random rand = new Random();
+
+		String id = UUID.randomUUID().toString();
+		String username = faker.name().username();
+		String email = username + "@gmail.com";
+		int age = rand.nextInt(MAX_AGE - MIN_AGE) + MIN_AGE;
+		String gender = rand.nextBoolean() ? "male" : "female";
+
+		user.setId(id);
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setAge(age);
+		user.setGender(gender);
+
+		return user;
+	}
 
 	public static User updateUser(User user) {
 

@@ -3,7 +3,6 @@ package com.crud.tests;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.config.Constants;
@@ -12,14 +11,6 @@ import com.models.User;
 import com.utils.JsonUtil;
 
 public class CRUDTestBDD extends BaseTest {
-
-	private User user = null;
-
-	@BeforeClass
-	public void createUser() {
-
-		user = Model.createUser();
-	}
 
 	@Test(priority = 1, enabled = true)
 	public void createUserUsingPostRequest() {
