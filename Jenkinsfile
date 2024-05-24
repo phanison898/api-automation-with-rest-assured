@@ -33,24 +33,23 @@ pipeline {
     post {
         always {
             script {
-                def testResultAction = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class)
+                def testngResults = new FilePath(new File(env.WORKSPACE, "target/surefire-reports/testng-results.xml")).readToString()
+                def parser = new XmlSlurper().parseText(testngResults)
                 def testDetails = ""
-                
-                if (testResultAction != null) {
-                    testResultAction.totalTests.each { test ->
-                        def status = test.status.toString()
-                        def color = status == 'FAILED' ? 'red' : (status == 'SKIPPED' ? 'orange' : 'green')
-                        
-                        testDetails += """
-                            <tr>
-                                <td>${test.className}.${test.displayName}</td>
-                                <td style="color:${color};">${status}</td>
-                                <td>${test.errorDetails ?: 'N/A'}</td>
-                            </tr>
-                        """
-                    }
-                } else {
-                    testDetails = "<tr><td colspan='3'>No tests found</td></tr>"
+
+                parser.'**'.findAll { it.name() == 'test-method' }.each { testMethod ->
+                    def testName = "${testMethod.@class}.${testMethod.@name}"
+                    def status = testMethod.@status.toString().toUpperCase()
+                    def color = status == 'FAIL' ? 'red' : (status == 'SKIP' ? 'orange' : 'green')
+                    def details = testMethod.'exception'.'full-stacktrace'.text() ?: 'N/A'
+
+                    testDetails += """
+                        <tr>
+                            <td>${testName}</td>
+                            <td style="color:${color};">${status}</td>
+                            <td>${details}</td>
+                        </tr>
+                    """
                 }
 
                 def emailBody = """
@@ -122,7 +121,7 @@ pipeline {
                 """
 
                 emailext(
-                    subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} Failure Notification",
+                    subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} ${currentBuild.result} Notification",
                     body: emailBody,
                     mimeType: 'text/html',
                     to: env.EMAIL_RECIPIENTS
