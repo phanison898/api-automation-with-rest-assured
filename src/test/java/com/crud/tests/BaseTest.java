@@ -43,18 +43,26 @@ public class BaseTest extends Base {
 
 	public RequestSpecification getReqSpec() {
 
-		RequestSpecification reqSpec = new RequestSpecBuilder().setBaseUri(Config.getApiUrl()).setBasePath("/users")
-				.addHeader("Content-Type", "application/json").build();
+		RequestSpecification reqSpec = new RequestSpecBuilder()
+				.setBaseUri(Config.getApiUrl())
+				.setBasePath("/users")
+				.addHeader("Content-Type", "application/json")
+				.build();
 
 		return reqSpec;
 	}
 
 	public ResponseSpecification getResSpec(int statusCode) {
 
-		ResponseSpecification resSpec = new ResponseSpecBuilder().expectStatusCode(statusCode)
-				.expectContentType(ContentType.JSON).expectBody("id", equalTo(user.getId()))
-				.expectBody("username", equalTo(user.getUsername())).expectBody("email", equalTo(user.getEmail()))
-				.expectBody("age", equalTo(user.getAge())).expectBody("gender", equalTo(user.getGender())).build();
+		ResponseSpecification resSpec = new ResponseSpecBuilder()
+				.expectStatusCode(statusCode)
+				.expectContentType(ContentType.JSON)
+				.expectBody("id", equalTo(user.getId()))
+				.expectBody("username", equalTo(user.getUsername()))
+				.expectBody("email", equalTo(user.getEmail()))
+				.expectBody("age", equalTo(user.getAge()))
+				.expectBody("gender", equalTo(user.getGender()))
+				.build();
 
 		return resSpec;
 	}

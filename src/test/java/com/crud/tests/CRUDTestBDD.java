@@ -68,7 +68,6 @@ public class CRUDTestBDD extends BaseTest {
                         .body()
                         .asPrettyString();
 
-
         logger.pass("Successfully sent GET request");
         logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
 

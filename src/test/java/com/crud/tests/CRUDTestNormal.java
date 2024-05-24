@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 import com.models.Model;
 import com.utils.JsonUtil;
 
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+
 public class CRUDTestNormal extends BaseTest {
 
     @Test(priority = 1, description = "Verify create user functionality using POST request", enabled = true)
@@ -42,9 +45,9 @@ public class CRUDTestNormal extends BaseTest {
                 given()
                         .spec(getReqSpec())
                         .pathParam("id", user.getId())
-                        .when()
+                .when()
                         .get("/{id}")
-                        .then()
+                .then()
                         .spec(getResSpec(200))
                         .extract()
                         .body()
@@ -101,6 +104,19 @@ public class CRUDTestNormal extends BaseTest {
                         .extract()
                         .body()
                         .asPrettyString();
+        
+        Response response = given()
+                .when()
+                .get("/users")
+                .then()
+                .statusCode(200) // Validate the status code
+                .contentType("application/json") // Validate the content type
+                .extract()
+                .response(); // Extract the response
+        
+       JsonPath json =  response.getBody().jsonPath();
+       json.get(jsonRes);
+
 
         logger.pass("Successfully sent DELETE request");
         logger.createJsonCodeBlock("Recieved Json response body = ", jsonRes);
