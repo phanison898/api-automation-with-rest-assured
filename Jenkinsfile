@@ -33,40 +33,6 @@ pipeline {
     post {
         always {
             script {
-                pipeline {
-    agent any
-
-    environment {
-        EMAIL_RECIPIENTS = 'team@example.com'
-    }
-
-    stages {
-        stage('Build') {
-            steps {
-                // Run your build steps here
-                echo 'Building...'
-                // For example, if you're using Maven:
-                sh 'mvn clean install'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Run your TestNG tests here
-                echo 'Running tests...'
-                // For example, if you're using Maven:
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/testng-results.xml'
-                }
-            }
-        }
-    }
-
-    post {
-        always {
-            script {
                 def testResultAction = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction.class)
                 def testDetails = ""
                 
